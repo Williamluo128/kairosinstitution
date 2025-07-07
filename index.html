@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>开路者传播学院 - AI时代教会内容传播与属灵教育基地</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6",
+              secondary: "#10b981",
+              dark: "#0f172a",
+              light: "#f8fafc",
+              accent: "#8b5cf6",
+              highlight: "#f43f5e",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+            fontFamily: {
+              sans: ["Noto Sans SC", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      .highlight-section {
+      animation: highlightPulse 1.5s ease-out;
+      }
+      @keyframes highlightPulse {
+      0% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.2);
+      }
+      70% {
+      box-shadow: 0 0 0 20px rgba(59, 130, 246, 0);
+      }
+      100% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+      }
+      }
+      html {
+      scroll-behavior: smooth;
+      }
+      body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background-color: #f8fafc;
+      }
+      .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      }
+      .primary-gradient {
+      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+      }
+      .secondary-gradient {
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      }
+      .accent-gradient {
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      }
+      .highlight-gradient {
+      background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+      }
+      .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      }
+      .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+      }
+      .parallax-bg {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      }
+      input:focus, button:focus {
+      outline: none;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+      .custom-checkbox {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid #3b82f6;
+      background-color: transparent;
+      transition: all 0.2s ease;
+      }
+      .custom-checkbox.checked {
+      background-color: #3b82f6;
+      }
+      .custom-checkbox.checked::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      }
+      .hero-bg {
+      position: relative;
+      overflow: hidden;
+      }
+      .hero-bg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.7) 100%);
+      z-index: 1;
+      }
+      .hero-content {
+      position: relative;
+      z-index: 2;
+      }
+      .course-card {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .pricing-card {
+      transition: all 0.3s ease;
+      }
+      .pricing-card:hover {
+      transform: scale(1.02);
+      }
+      .qr-code {
+      transition: transform 0.3s ease;
+      }
+      .qr-code:hover {
+      transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav
+      class="fixed top-0 left-0 w-full bg-white bg-opacity-90 backdrop-blur-md z-50 shadow-sm"
+    >
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center">
+          <h1 class="text-2xl font-['Pacifico'] text-primary">开路者</h1>
+          <span class="ml-2 text-lg font-medium">传播学院</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            href="#vision"
+            class="text-gray-700 hover:text-primary transition-colors"
+            >愿景</a
+          >
+          <a
+            href="#courses"
+            class="text-gray-700 hover:text-primary transition-colors"
+            >课程</a
+          >
+          <a
+            href="#details"
+            class="text-gray-700 hover:text-primary transition-colors"
+            >详情</a
+          >
+          <a
+            href="#pricing"
+            class="text-gray-700 hover:text-primary transition-colors"
+            >学费</a
+          >
+          <a
+            href="#registration"
+            class="text-gray-700 hover:text-primary transition-colors"
+            >报名</a
+          >
+          <button
+            id="navRegisterBtn"
+            class="bg-primary text-white px-6 py-2 rounded-button hover:bg-blue-600 active:bg-blue-700 transition-colors whitespace-nowrap"
+          >
+            立即报名
+          </button>
+        </div>
+        <button
+          class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700"
+        >
+          <i class="ri-menu-line ri-lg"></i>
+        </button>
+      </div>
+    </nav>
+    <!-- Hero 区域 -->
+    <section
+      class="hero-bg min-h-screen flex items-center pt-20"
+      id="vision"
+      style="background-image: url('https://readdy.ai/api/search-image?query=modern%20church%20interior%20with%20soft%20natural%20light%20streaming%20through%20stained%20glass%20windows%2C%20warm%20and%20inviting%20atmosphere%2C%20contemporary%20architectural%20design%20with%20wooden%20elements%2C%20clean%20minimalist%20space%20with%20subtle%20technology%20integration%2C%20bright%20airy%20environment%20with%20gentle%20sunbeams%2C%20peaceful%20and%20spiritual%20ambiance&width=1920&height=1080&seq=hero-bg-02&orientation=landscape')"
+    >
+      <div class="container mx-auto px-6 hero-content">
+        <div class="max-w-3xl">
+          <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+            AI 时代的教会传播者<br />
+            <span class="text-primary">装备与使命</span>
+          </h1>
+          <p class="text-xl text-gray-200 mb-8 leading-relaxed">
+            开路者传播学院致力于成为全球华人教会最具影响力的 AI
+            时代教会内容传播与属灵教育基地，不仅训练 AI 技术，更训练一代在 AI
+            浪潮中持守真道、懂得辨识、勇敢传播的神国子民。
+          </p>
+          <div
+            class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <button
+              class="bg-primary text-white px-8 py-3 rounded-button hover:bg-blue-600 transition-colors whitespace-nowrap text-lg font-medium"
+            >
+              了解课程
+            </button>
+            <button
+              class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-button hover:bg-white hover:text-gray-900 transition-colors whitespace-nowrap text-lg font-medium"
+            >
+              立即报名
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 目标区域 -->
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 animate-on-scroll">
+          <h2 class="text-3xl font-bold mb-4">我们的目标</h2>
+          <p class="text-xl text-gray-700 leading-relaxed">
+            建立"AI + 多媒体 + 教会事工"基础能力，装备华人信徒掌握 21
+            世纪福音传播工具。
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 animate-on-scroll">
+          <div
+            class="bg-gray-50 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-blue-100 rounded-full mb-6"
+            >
+              <i class="ri-ai-generate ri-xl text-primary"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">AI 技术应用</h3>
+            <p class="text-gray-600">
+              掌握 ChatGPT、Midjourney、Canva AI 等工具，将 AI
+              技术应用于教会事工中。
+            </p>
+          </div>
+          <div
+            class="bg-gray-50 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-green-100 rounded-full mb-6"
+            >
+              <i class="ri-movie-line ri-xl text-secondary"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">多媒体创作</h3>
+            <p class="text-gray-600">
+              学习视频制作、平面设计、音频编辑等多媒体技能，创作有影响力的福音内容。
+            </p>
+          </div>
+          <div
+            class="bg-gray-50 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-purple-100 rounded-full mb-6"
+            >
+              <i class="ri-heart-line ri-xl text-accent"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">属灵辨识</h3>
+            <p class="text-gray-600">
+              培养在 AI 时代的属灵辨识力，探讨 AI 与神学、信仰实践的关系。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 课程架构 -->
+    <section class="py-20 bg-gray-50" id="courses">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 animate-on-scroll">
+          <h2 class="text-3xl font-bold mb-4">核心课程架构</h2>
+          <p class="text-gray-600 mb-8">
+            共 5 门课程，每门课可独立选修，也可组成完整 Certificate
+          </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+          <div class="lg:col-span-8 animate-on-scroll">
+            <div class="bg-white rounded-lg shadow-sm p-8 h-full course-card">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full mr-4"
+                >
+                  <i class="ri-camera-line ri-lg text-primary"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold">M101: 教会媒体事工入门</h3>
+                  <p class="text-gray-500">12 学时</p>
+                </div>
+              </div>
+              <p class="text-gray-700 mb-4">
+                掌握基础视觉传达、摄影、剪辑、平面设计、灯光、影音系统，为教会媒体事工打下坚实基础。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm"
+                  >摄影技巧</span
+                >
+                <span
+                  class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm"
+                  >视频剪辑</span
+                >
+                <span
+                  class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm"
+                  >平面设计</span
+                >
+                <span
+                  class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm"
+                  >音控系统</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-4 animate-on-scroll">
+            <div class="bg-white rounded-lg shadow-sm p-8 h-full course-card">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-green-100 rounded-full mr-4"
+                >
+                  <i class="ri-robot-line ri-lg text-secondary"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold">
+                    AI101: 教会 AI 工具实务入门
+                  </h3>
+                  <p class="text-gray-500">12 学时</p>
+                </div>
+              </div>
+              <p class="text-gray-700 mb-4">
+                熟练使用 ChatGPT、Midjourney、Canva AI、Suno、Runway
+                等工具，提升教会事工效率。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-sm"
+                  >ChatGPT</span
+                >
+                <span
+                  class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-sm"
+                  >Midjourney</span
+                >
+                <span
+                  class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-sm"
+                  >Canva AI</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+          <div class="lg:col-span-4 animate-on-scroll">
+            <div class="bg-white rounded-lg shadow-sm p-8 h-full course-card">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-purple-100 rounded-full mr-4"
+                >
+                  <i class="ri-movie-2-line ri-lg text-accent"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold">
+                    M102: 创意短视频实战工作坊
+                  </h3>
+                  <p class="text-gray-500">6 学时</p>
+                </div>
+              </div>
+              <p class="text-gray-700 mb-4">
+                独立完成一支福音短视频，从脚本、拍摄、剪辑、字幕到配乐，全方位实战训练。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-sm"
+                  >脚本创作</span
+                >
+                <span
+                  class="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-sm"
+                  >拍摄技巧</span
+                >
+                <span
+                  class="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-sm"
+                  >剪辑配乐</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-4 animate-on-scroll">
+            <div class="bg-white rounded-lg shadow-sm p-8 h-full course-card">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-red-100 rounded-full mr-4"
+                >
+                  <i class="ri-book-open-line ri-lg text-highlight"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold">
+                    AI102: AI 辅助讲章与门训创作实务
+                  </h3>
+                  <p class="text-gray-500">6 学时</p>
+                </div>
+              </div>
+              <p class="text-gray-700 mb-4">
+                设计讲章大纲、小组查经问题、门训教材，实作 Prompt
+                工程，提升事工效率。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-red-50 text-red-600 px-3 py-1 rounded-full text-sm"
+                  >讲章设计</span
+                >
+                <span
+                  class="bg-red-50 text-red-600 px-3 py-1 rounded-full text-sm"
+                  >Prompt 工程</span
+                >
+                <span
+                  class="bg-red-50 text-red-600 px-3 py-1 rounded-full text-sm"
+                  >门训教材</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-4 animate-on-scroll">
+            <div class="bg-white rounded-lg shadow-sm p-8 h-full course-card">
+              <div class="flex items-center mb-6">
+                <div
+                  class="w-12 h-12 flex items-center justify-center bg-amber-100 rounded-full mr-4"
+                >
+                  <i class="ri-lightbulb-line ri-lg text-amber-600"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold">
+                    T101: AI 伦理与属灵辨识力导论
+                  </h3>
+                  <p class="text-gray-500">6 学时</p>
+                </div>
+              </div>
+              <p class="text-gray-700 mb-4">
+                探讨 AI 与神学、属灵辨识、教会应对与信徒操练，培养在 AI
+                时代的属灵分辨力。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-amber-50 text-amber-600 px-3 py-1 rounded-full text-sm"
+                  >AI 伦理</span
+                >
+                <span
+                  class="bg-amber-50 text-amber-600 px-3 py-1 rounded-full text-sm"
+                  >神学思考</span
+                >
+                <span
+                  class="bg-amber-50 text-amber-600 px-3 py-1 rounded-full text-sm"
+                  >属灵辨识</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="max-w-3xl mx-auto animate-on-scroll">
+          <div
+            id="courseChart"
+            class="w-full h-80 rounded-lg shadow-sm bg-white p-4"
+          ></div>
+        </div>
+      </div>
+    </section>
+    <!-- 课程详情 -->
+    <section class="py-20 bg-white" id="details">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 animate-on-scroll">
+          <h2 class="text-3xl font-bold mb-4">课程简介</h2>
+          <p class="text-xl text-gray-700 leading-relaxed mb-8">
+            在 AI 与新媒体深度重塑社会沟通模式的时代，教会如何回应？
+          </p>
+          <p class="text-gray-600">
+            我们邀请你加入这门集 AI
+            技术、创意媒体、神学思辨于一体的教会事工训练课程，从零开始，学习如何制作视频、设计图像、使用
+            AI 工具、构建教案，并深入思考这些科技如何与我们的信仰相连。
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+          <div class="animate-on-scroll">
+            <h3 class="text-2xl font-semibold mb-6">课程模块</h3>
+            <div class="space-y-6">
+              <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4"
+                  >
+                    <i class="ri-camera-line text-primary"></i>
+                  </div>
+                  <h4 class="text-lg font-medium">媒体事工入门训练（M101）</h4>
+                </div>
+                <p class="text-gray-600">
+                  摄影技巧、视频剪辑、平面设计、音控系统、视觉神学
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-green-100 rounded-full mr-4"
+                  >
+                    <i class="ri-robot-line text-secondary"></i>
+                  </div>
+                  <h4 class="text-lg font-medium">AI 工具入门实操（AI101）</h4>
+                </div>
+                <p class="text-gray-600">
+                  ChatGPT 写讲章、Midjourney 画图、Suno 做敬拜音乐、Canva
+                  设计海报
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-purple-100 rounded-full mr-4"
+                  >
+                    <i class="ri-movie-2-line text-accent"></i>
+                  </div>
+                  <h4 class="text-lg font-medium">创意短视频实战（M102）</h4>
+                </div>
+                <p class="text-gray-600">
+                  编剧、拍摄、配音、剪辑、应用在布道或主日分享
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full mr-4"
+                  >
+                    <i class="ri-book-open-line text-highlight"></i>
+                  </div>
+                  <h4 class="text-lg font-medium">
+                    AI 讲章与门训创作（AI102）
+                  </h4>
+                </div>
+                <p class="text-gray-600">
+                  圣经经文整合、Prompt 设计、小组教材输出、Notion 管理
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-amber-100 rounded-full mr-4"
+                  >
+                    <i class="ri-lightbulb-line text-amber-600"></i>
+                  </div>
+                  <h4 class="text-lg font-medium">AI 伦理与信仰思辨（T101）</h4>
+                </div>
+                <p class="text-gray-600">
+                  探讨 AI 与圣灵带领、隐私与公义、属灵分辨力操练
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="animate-on-scroll">
+            <div class="bg-gray-50 rounded-lg p-8 shadow-sm mb-8">
+              <h3 class="text-2xl font-semibold mb-6">上课方式</h3>
+              <div class="flex items-start mb-6">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                >
+                  <i class="ri-building-line text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-medium mb-2">洛杉矶现场</h4>
+                  <p class="text-gray-600">
+                    在洛杉矶校区参与面对面互动课程，与讲师和同学直接交流。
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start mb-6">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                >
+                  <i class="ri-global-line text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-medium mb-2">全球线上同步</h4>
+                  <p class="text-gray-600">
+                    通过 Zoom 实时参与课程，与现场学员同步学习。
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                >
+                  <i class="ri-video-line text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="text-lg font-medium mb-2">课程回放</h4>
+                  <p class="text-gray-600">
+                    所有课程提供录像回放，方便学员灵活安排学习时间。
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-8 shadow-sm">
+              <h3 class="text-2xl font-semibold mb-6">修课与证书</h3>
+              <ul class="space-y-4">
+                <li class="flex items-center">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">可选择单门课程报名</span>
+                </li>
+                <li class="flex items-center">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >或修满 5 门课程获得「教会 AI+媒体事工初阶证书」</span
+                  >
+                </li>
+                <li class="flex items-center">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >完成课程后，可进入 2025 年夏季进阶训练营（Level
+                    2）继续深化学习</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="max-w-4xl mx-auto animate-on-scroll">
+          <div
+            class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-8 text-white shadow-lg"
+          >
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-2/3 mb-8 md:mb-0 md:pr-8">
+                <h3 class="text-2xl font-bold mb-4">适合人群</h3>
+                <p class="mb-6">
+                  无论你是牧者、主日学老师、教会志工，还是想用创意服事神的年轻人，这门课程都为你量身打造！
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-3"
+                    >
+                      <i class="ri-user-star-line text-white"></i>
+                    </div>
+                    <span>教会牧者</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-3"
+                    >
+                      <i class="ri-team-line text-white"></i>
+                    </div>
+                    <span>主日学老师</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-3"
+                    >
+                      <i class="ri-heart-line text-white"></i>
+                    </div>
+                    <span>教会志工</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-3"
+                    >
+                      <i class="ri-creative-commons-line text-white"></i>
+                    </div>
+                    <span>创意事工同工</span>
+                  </div>
+                </div>
+              </div>
+              <div class="md:w-1/3">
+                <img
+                  src="https://readdy.ai/api/search-image?query=diverse%20group%20of%20church%20members%20learning%20technology%20in%20a%20modern%20classroom%20setting%2C%20warm%20and%20inviting%20atmosphere%2C%20multi-ethnic%20group%2C%20collaborative%20learning%20environment&width=400&height=400&seq=people-01&orientation=squarish"
+                  alt="适合人群"
+                  class="rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+                 </div>
+       </div>
+     </section>
+    <!-- 学费与优惠 -->
+    <section class="py-20 bg-gray-50" id="pricing">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 animate-on-scroll">
+          <h2 class="text-3xl font-bold mb-4">学费与优惠</h2>
+          <p class="text-gray-600">
+            我们提供灵活的课程选择和多种优惠方案，满足不同学员的需求。
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div
+            class="bg-white rounded-lg shadow-sm overflow-hidden pricing-card animate-on-scroll"
+          >
+            <div class="bg-blue-500 p-6 text-white">
+              <h3 class="text-xl font-semibold mb-2">单门课程</h3>
+              <div class="flex items-end">
+                <span class="text-3xl font-bold">$150</span>
+                <span class="ml-1 text-blue-100">/门</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">自由选择感兴趣的单门课程</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >课程视频回放（有效期 3 个月）</span
+                  >
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">课程电子讲义</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-primary text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">单课结业证明</span>
+                </li>
+              </ul>
+              <button
+                class="w-full bg-blue-500 text-white py-3 rounded-button mt-6 hover:bg-blue-600 transition-colors whitespace-nowrap"
+              >
+                选择此方案
+              </button>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg transform md:-translate-y-4 z-10 pricing-card animate-on-scroll"
+          >
+            <div
+              class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white relative overflow-hidden"
+            >
+              <div
+                class="absolute top-0 right-0 bg-yellow-400 text-xs font-bold text-gray-900 py-1 px-3 transform rotate-45 translate-x-2 -translate-y-1"
+              >
+                推荐
+              </div>
+              <h3 class="text-xl font-semibold mb-2">五门全修合报</h3>
+              <div class="flex items-end">
+                <span class="text-3xl font-bold">$599</span>
+                <span class="ml-1 text-blue-100">/全部</span>
+              </div>
+              <div
+                class="mt-2 text-sm bg-white bg-opacity-20 inline-block px-2 py-1 rounded"
+              >
+                原价 $750，节省 $151
+              </div>
+            </div>
+            <div class="p-6">
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-purple-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-accent text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">全部 5 门核心课程</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-purple-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-accent text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >课程视频回放（有效期 6 个月）</span
+                  >
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-purple-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-accent text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">全套课程电子讲义</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-purple-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-accent text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >「教会 AI+媒体事工初阶证书」</span
+                  >
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-purple-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-accent text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >优先报名 2025 年夏季进阶训练营资格</span
+                  >
+                </li>
+              </ul>
+              <button
+                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-button mt-6 hover:from-blue-700 hover:to-purple-700 transition-colors whitespace-nowrap"
+              >
+                选择此方案
+              </button>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-sm overflow-hidden pricing-card animate-on-scroll"
+          >
+            <div class="bg-green-500 p-6 text-white">
+              <h3 class="text-xl font-semibold mb-2">团体优惠</h3>
+              <div class="flex items-end">
+                <span class="text-3xl font-bold">9折</span>
+                <span class="ml-1 text-green-100">起</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-green-600 text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >教会团体报名（3 人以上）享 9 折优惠</span
+                  >
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-green-600 text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >全职牧者/神学生可申请专项助学金</span
+                  >
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-green-600 text-sm"></i>
+                  </div>
+                  <span class="text-gray-700">团体专属学习小组</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-green-100 rounded-full mr-3 mt-0.5"
+                  >
+                    <i class="ri-check-line text-green-600 text-sm"></i>
+                  </div>
+                  <span class="text-gray-700"
+                    >定制化教会媒体事工咨询（1 小时）</span
+                  >
+                </li>
+              </ul>
+              <button
+                class="w-full bg-green-500 text-white py-3 rounded-button mt-6 hover:bg-green-600 transition-colors whitespace-nowrap"
+              >
+                联系我们详询
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 animate-on-scroll"
+        >
+          <h3 class="text-xl font-semibold mb-6">常见问题</h3>
+          <div class="space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+              <button
+                class="flex justify-between items-center w-full text-left"
+                id="faq1"
+              >
+                <span class="text-lg font-medium"
+                  >我没有任何媒体或 AI 基础，可以参加吗？</span
+                >
+                <i class="ri-arrow-down-s-line text-gray-500"></i>
+              </button>
+              <div class="mt-2 hidden" id="faq1-answer">
+                <p class="text-gray-600">
+                  完全可以！我们的课程专为零基础学员设计，从最基础的概念和操作开始教学，循序渐进，确保每位学员都能跟上学习进度。
+                </p>
+              </div>
+            </div>
+            <div class="border-b border-gray-200 pb-4">
+              <button
+                class="flex justify-between items-center w-full text-left"
+                id="faq2"
+              >
+                <span class="text-lg font-medium"
+                  >如果我无法参加现场课程，有其他选择吗？</span
+                >
+                <i class="ri-arrow-down-s-line text-gray-500"></i>
+              </button>
+              <div class="mt-2 hidden" id="faq2-answer">
+                <p class="text-gray-600">
+                  有的！我们提供全球线上同步课程，您可以通过 Zoom
+                  实时参与。此外，所有课程都提供录像回放，您可以根据自己的时间安排灵活学习。
+                </p>
+              </div>
+            </div>
+            <div class="border-b border-gray-200 pb-4">
+              <button
+                class="flex justify-between items-center w-full text-left"
+                id="faq3"
+              >
+                <span class="text-lg font-medium"
+                  >课程需要哪些设备或软件？</span
+                >
+                <i class="ri-arrow-down-s-line text-gray-500"></i>
+              </button>
+              <div class="mt-2 hidden" id="faq3-answer">
+                <p class="text-gray-600">
+                  基本上您只需要一台能上网的电脑或平板电脑。对于实操课程，我们建议您准备一部智能手机（用于拍摄练习）和基本的网络连接。所有软件我们会提供教学和指导，大部分都有免费或试用版本可以使用。
+                </p>
+              </div>
+            </div>
+            <div class="pb-2">
+              <button
+                class="flex justify-between items-center w-full text-left"
+                id="faq4"
+              >
+                <span class="text-lg font-medium"
+                  >我可以只选择感兴趣的单门课程吗？</span
+                >
+                <i class="ri-arrow-down-s-line text-gray-500"></i>
+              </button>
+              <div class="mt-2 hidden" id="faq4-answer">
+                <p class="text-gray-600">
+                  当然可以！我们的课程设计允许学员根据自己的兴趣和需求选择单门课程。每门课程都是独立的学习单元，同时又能与其他课程形成完整的知识体系。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 报名区域 -->
+    <section class="py-20 bg-white" id="registration">
+      <div class="container mx-auto px-6">
+        <div class="max-w-5xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="animate-on-scroll">
+              <h2 class="text-3xl font-bold mb-6">立即报名</h2>
+              <p class="text-gray-600 mb-8">
+                填写以下表格报名参加开路者传播学院的课程，开启您的 AI
+                时代教会媒体事工之旅。
+              </p>
+              <form class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label for="firstName" class="block text-gray-700 mb-2"
+                      >姓名</label
+                    >
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label for="email" class="block text-gray-700 mb-2"
+                      >电子邮箱</label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label for="phone" class="block text-gray-700 mb-2"
+                    >电话</label
+                  >
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label for="church" class="block text-gray-700 mb-2"
+                    >所属教会/机构</label
+                  >
+                  <input
+                    type="text"
+                    id="church"
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">选择课程</label>
+                  <div class="space-y-3">
+                    <div class="flex items-center">
+                      <div class="custom-checkbox" id="course1"></div>
+                      <label for="course1" class="ml-3 text-gray-700"
+                        >M101: 教会媒体事工入门</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <div class="custom-checkbox" id="course2"></div>
+                      <label for="course2" class="ml-3 text-gray-700"
+                        >AI101: 教会 AI 工具实务入门</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <div class="custom-checkbox" id="course3"></div>
+                      <label for="course3" class="ml-3 text-gray-700"
+                        >M102: 创意短视频实战工作坊</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <div class="custom-checkbox" id="course4"></div>
+                      <label for="course4" class="ml-3 text-gray-700"
+                        >AI102: AI 辅助讲章与门训创作实务</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <div class="custom-checkbox" id="course5"></div>
+                      <label for="course5" class="ml-3 text-gray-700"
+                        >T101: AI 伦理与属灵辨识力导论</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <div class="custom-checkbox" id="courseAll"></div>
+                      <label for="courseAll" class="ml-3 text-gray-700"
+                        >五门全修合报（优惠价 $599）</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label for="message" class="block text-gray-700 mb-2"
+                    >其他问题或需求</label
+                  >
+                  <textarea
+                    id="message"
+                    rows="4"
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-colors"
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  class="bg-primary text-white px-8 py-3 rounded-button hover:bg-blue-600 transition-colors whitespace-nowrap"
+                >
+                  提交报名
+                </button>
+              </form>
+            </div>
+            <div class="animate-on-scroll">
+              <div class="bg-gray-50 rounded-lg p-8 shadow-sm">
+                <h3 class="text-xl font-semibold mb-6">联系方式</h3>
+                <div class="space-y-6">
+                  <div class="flex items-start">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                    >
+                      <i class="ri-mail-line text-primary"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-lg font-medium mb-1">电子邮箱</h4>
+                      <p class="text-gray-600">info@kairos-usa.org</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                    >
+                      <i class="ri-phone-line text-primary"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-lg font-medium mb-1">电话</h4>
+                      <p class="text-gray-600">(626) 282-8470</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full mr-4 mt-1"
+                    >
+                      <i class="ri-global-line text-primary"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-lg font-medium mb-1">网站</h4>
+                      <p class="text-gray-600">
+                        www.kairos-usa.org/ai-training
+                      </p>
+                    </div>
+                  </div>
+                  <div class="pt-4">
+                    <h4 class="text-lg font-medium mb-4">扫描二维码报名</h4>
+                    <div
+                      class="bg-white p-4 rounded-lg shadow-sm inline-block qr-code"
+                    >
+                      <div
+                        class="w-40 h-40 bg-gray-200 rounded flex items-center justify-center"
+                      >
+                        <i class="ri-qr-code-line ri-4x text-gray-500"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pt-4">
+                    <h4 class="text-lg font-medium mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                      <a
+                        href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-blue-100 transition-colors"
+                      >
+                        <i class="ri-wechat-fill text-green-600"></i>
+                      </a>
+                      <a
+                        href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-blue-100 transition-colors"
+                      >
+                        <i class="ri-facebook-fill text-blue-600"></i>
+                      </a>
+                      <a
+                        href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-blue-100 transition-colors"
+                      >
+                        <i class="ri-instagram-fill text-pink-600"></i>
+                      </a>
+                      <a
+                        href="#"
+                        class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-blue-100 transition-colors"
+                      >
+                        <i class="ri-youtube-fill text-red-600"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h3 class="text-xl font-['Pacifico'] mb-4">开路者传播学院</h3>
+            <p class="text-gray-400 mb-4">
+              装备华人信徒掌握 21 世纪福音传播工具
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-wechat-fill ri-lg"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-facebook-fill ri-lg"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-instagram-fill ri-lg"></i>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                <i class="ri-youtube-fill ri-lg"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-medium mb-4">快速链接</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#vision"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >愿景</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#courses"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >课程</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#details"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >详情</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#pricing"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >学费</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#registration"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >报名</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-medium mb-4">联系我们</h4>
+            <ul class="space-y-2">
+              <li class="flex items-center">
+                <i class="ri-mail-line mr-2"></i>
+                <span class="text-gray-400">info@kairos-usa.org</span>
+              </li>
+              <li class="flex items-center">
+                <i class="ri-phone-line mr-2"></i>
+                <span class="text-gray-400">(626) 282-8470</span>
+              </li>
+              <li class="flex items-center">
+                <i class="ri-map-pin-line mr-2"></i>
+                <span class="text-gray-400">洛杉矶, 加利福尼亚</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-medium mb-4">订阅最新资讯</h4>
+            <p class="text-gray-400 mb-4">
+              获取课程更新、AI 技术资讯和教会媒体事工的最新动态
+            </p>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="您的电子邮箱"
+                class="px-4 py-2 bg-gray-800 text-white border-none rounded-l focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button
+                type="submit"
+                class="bg-primary text-white px-4 py-2 rounded-r hover:bg-blue-600 transition-colors whitespace-nowrap"
+              >
+                订阅
+              </button>
+            </form>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm"
+        >
+          <p>© 2025 开路者传播学院. 版权所有.</p>
+        </div>
+      </div>
+    </footer>
+    <script id="scrollAnimation">
+      document.addEventListener("DOMContentLoaded", function () {
+        const navRegisterBtn = document.getElementById("navRegisterBtn");
+        const registrationForm = document.getElementById("registration");
+        if (navRegisterBtn && registrationForm) {
+          navRegisterBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            registrationForm.scrollIntoView({ behavior: "smooth" });
+            registrationForm.classList.add("highlight-section");
+            setTimeout(() => {
+              registrationForm.classList.remove("highlight-section");
+            }, 1500);
+          });
+        }
+        const animateElements = document.querySelectorAll(".animate-on-scroll");
+        function checkScroll() {
+          animateElements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (elementTop < windowHeight * 0.9) {
+              element.classList.add("visible");
+            }
+          });
+        }
+        window.addEventListener("scroll", checkScroll);
+        checkScroll();
+      });
+    </script>
+    <script id="courseChart">
+      document.addEventListener("DOMContentLoaded", function () {
+        const chartDom = document.getElementById("courseChart");
+        const myChart = echarts.init(chartDom);
+        const option = {
+          animation: false,
+          title: {
+            text: "课程学时分布",
+            left: "center",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          tooltip: {
+            trigger: "item",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          legend: {
+            orient: "vertical",
+            right: 10,
+            top: "center",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          series: [
+            {
+              name: "学时分布",
+              type: "pie",
+              radius: ["40%", "70%"],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 8,
+                borderColor: "#fff",
+                borderWidth: 2,
+              },
+              label: {
+                show: false,
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: 14,
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                {
+                  value: 12,
+                  name: "M101: 教会媒体事工入门",
+                  itemStyle: { color: "rgba(87, 181, 231, 1)" },
+                },
+                {
+                  value: 12,
+                  name: "AI101: 教会AI工具实务入门",
+                  itemStyle: { color: "rgba(141, 211, 199, 1)" },
+                },
+                {
+                  value: 6,
+                  name: "M102: 创意短视频实战工作坊",
+                  itemStyle: { color: "rgba(251, 191, 114, 1)" },
+                },
+                {
+                  value: 6,
+                  name: "AI102: AI辅助讲章与门训创作实务",
+                  itemStyle: { color: "rgba(252, 141, 98, 1)" },
+                },
+                {
+                  value: 6,
+                  name: "T101: AI伦理与属灵辨识力导论",
+                  itemStyle: { color: "rgba(179, 162, 199, 1)" },
+                },
+              ],
+            },
+          ],
+        };
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+          myChart.resize();
+        });
+      });
+    </script>
+    <script id="faqToggle">
+      document.addEventListener("DOMContentLoaded", function () {
+        const faqButtons = document.querySelectorAll('[id^="faq"]');
+        faqButtons.forEach((button) => {
+          if (!button.id.includes("-answer")) {
+            button.addEventListener("click", function () {
+              const answerId = button.id + "-answer";
+              const answerElement = document.getElementById(answerId);
+              if (answerElement.classList.contains("hidden")) {
+                answerElement.classList.remove("hidden");
+                button.querySelector("i").classList.remove("ri-arrow-down-s-line");
+                button.querySelector("i").classList.add("ri-arrow-up-s-line");
+              } else {
+                answerElement.classList.add("hidden");
+                button.querySelector("i").classList.remove("ri-arrow-up-s-line");
+                button.querySelector("i").classList.add("ri-arrow-down-s-line");
+              }
+            });
+          }
+        });
+      });
+    </script>
+    <script id="customCheckbox">
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".custom-checkbox");
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener("click", function () {
+            this.classList.toggle("checked");
+            if (this.id === "courseAll") {
+              const allChecked = this.classList.contains("checked");
+              document.querySelectorAll(".custom-checkbox").forEach((cb) => {
+                if (cb.id !== "courseAll") {
+                  if (allChecked) {
+                    cb.classList.add("checked");
+                  } else {
+                    cb.classList.remove("checked");
+                  }
+                }
+              });
+            } else {
+              const allCheckbox = document.getElementById("courseAll");
+              const individualCheckboxes = Array.from(
+                document.querySelectorAll(".custom-checkbox"),
+              ).filter((cb) => cb.id !== "courseAll");
+              const allIndividualChecked = individualCheckboxes.every((cb) =>
+                cb.classList.contains("checked"),
+              );
+              if (allIndividualChecked) {
+                allCheckbox.classList.add("checked");
+              } else {
+                allCheckbox.classList.remove("checked");
+              }
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html> 
